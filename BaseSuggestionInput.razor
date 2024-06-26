@@ -1,0 +1,32 @@
+﻿@namespace DNE.CS.Inventory.Client.Pages.Shared.Component
+
+<div id="@SelectId" class="BaseInput" tabindex="-1">
+    <div class="selectBox" tabindex="0">
+        <input id="@SelectId-input" class="selectInput" autocomplete="off" type="text"
+               placeholder="@Placeholder" @bind="SelectedItem" @bind:event="oninput" @bind:after="Search"
+               @onfocus="SelectInputFocuse" />
+
+        @if (!string.IsNullOrEmpty(SelectedItem) && _isSelectItemBoxActive)
+        {
+            <div class="selectItemBox active">
+                <ul class="selectItem">
+                    <Virtualize @ref="VirtualRef" Context="_context" ItemsProvider="@ProvideVirtualizedItemsAync">
+                        <ItemContent>
+                            <li @onclick="@(() => SelectData(_context))">@_context.Name</li>
+                        </ItemContent>
+                        <Placeholder>
+                            <li>
+                                Loading&hellip;
+                            </li>
+                        </Placeholder>
+                        <EmptyContent>
+                            <li>
+                                There are no strings to display.
+                            </li>
+                        </EmptyContent>
+                    </Virtualize>
+                </ul>
+            </div>
+        }
+    </div>
+</div>
